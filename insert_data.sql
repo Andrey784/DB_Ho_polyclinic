@@ -40,14 +40,71 @@ INSERT INTO patient (first_name, middle_name, last_name, date_birth, snils, phon
 ('Елена', 'Дмитриевна', 'Козлова', '03.05.2004', '78611433276', '9780811712', 'Женский', '9006 537799 ', 4),
 ('Даниил', 'Кириллович', 'Попов', '21.11.2001', '48521068517', '9959991192', 'Mужской', '7771 485925 ', 2),
 ('Анна', 'Ивановна', 'Смирнова', '01.08.1998', '66967560507', '9049527371', 'Женский', '4030 342201', 1);
- 
+
 create extension if not exists pgcrypto;
- SELECT * FROM doctor;
- INSERT INTO doctor (first_name, middle_name, last_name, login, password_doctor, id_speciality) VALUES
- ('Ирина', 'Сергеевна', 'Николаева', 'irina_nicolaeva', pgp_sym_encrypt('J9#pA5cDeZ', 'this_is_a_dummy_secret_key'), 80),
- ('Павел', 'Алексеевич', 'Лебедев', 'pavel_lebedev', pgp_sym_encrypt('Gh7&kL3pQw', 'this_is_a_dummy_secret_key'), 52),
- ('Татьяна', 'Владимировна', 'Кузнецова', 'tatyana_kuznecova', pgp_sym_encrypt('XyZ2$abC8@', 'this_is_a_dummy_secret_key'), 52);
- 
+SELECT * FROM doctor;
+INSERT INTO doctor (first_name, middle_name, last_name, login, password_doctor, id_speciality) VALUES
+('Ирина', 'Сергеевна', 'Николаева', 'irina_nicolaeva', pgp_sym_encrypt('J9#pA5cDeZ', 'this_is_a_dummy_secret_key'), 80),
+('Павел', 'Алексеевич', 'Лебедев', 'pavel_lebedev', pgp_sym_encrypt('Gh7&kL3pQw', 'this_is_a_dummy_secret_key'), 52),
+('Татьяна', 'Владимировна', 'Кузнецова', 'tatyana_kuznecova', pgp_sym_encrypt('XyZ2$abC8@', 'this_is_a_dummy_secret_key'), 52);
 
- 
+SELECT * FROM medcard;
+INSERT INTO medcard (date_create, id_patient) VALUES
+('17.11.2022', 3),
+('18.03.2019', 2),
+('29.07.2021', 5),
+('11.05.2023', 4),
+('01.07.2020', 1);
 
+SELECT * FROM mkb_10;
+INSERT INTO mkb_10 (code_diagnosis, name_diagnosis) VALUES
+('A00', 'Холера'),
+('I10', 'Гипертоническая болезнь'),
+('K29', 'Гастрит'),
+('J45', 'Астма');
+
+SELECT * FROM record;
+INSERT INTO record (date_record, complaints, id_medcard, id_doctor) VALUES
+('26.10.2023', 'Кашель, одышка, слабость', 1, 2),
+('3.11.2023', 'Головная боль, шум и звон в ушах, снижение остроты зрения', 2, 1),
+('19.06.2023', 'тяжесть после еды, тошнота и рвота', 3, 3);
+
+SELECT * FROM diagnosis;
+INSERT INTO diagnosis (id_record, code_diagnosis, is_first) VALUES
+(1, 'J45', true),
+(2, 'I10', true),
+(3, 'K29', false);
+
+SELECT * FROM drug;
+INSERT INTO drug (name_drug, dosage, release_form, quantity) VALUES
+('Бупренорфин + Налоксон', 'Таблетки сублингвальные', '0,2 мг + 0,2 мг', '60 таблеток (упаковка, кратная N 20)'),
+('Морфин', 'Раствор для инъекций, раствор для подкожного введения ', '10 мг/мл 1 мл', '20 ампул (шприц-тюбиков)'),
+('Тримеперидин', 'Таблетки', 'Таблетки 25 мг', '50 таблеток'),
+('Фентанил', 'Пластырь', '12,5 мкг/час, 25 мкг/час, 50 мкг/час, 75 мкг/час, 100 мкг/час', '20 пластырей');
+
+SELECT * FROM prescription;
+INSERT INTO prescription (date_prescription, period, id_record) VALUES
+('26.10.2023', 3, 1),
+('19.06.2023', 2, 3),
+('3.11.2023', 6, 2);
+
+SELECT * FROM drug_prescription;
+INSERT INTO drug_prescription (id_drug, id_prescription) VALUES
+(2, 1),
+(3, 2),
+(1, 2),
+(4, 3);
+
+
+--Проверка
+SELECT * FROM diagnosis;
+SELECT * FROM doctor;
+SELECT * FROM drug;
+SELECT * FROM drug_prescription;
+SELECT * FROM medcard;
+SELECT * FROM mkb_10;
+SELECT * FROM oms;
+SELECT * FROM patient;
+SELECT * FROM prescription;
+SELECT * FROM record;
+SELECT * FROM speciality_doctor;
