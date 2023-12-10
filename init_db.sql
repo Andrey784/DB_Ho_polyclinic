@@ -68,8 +68,8 @@ CREATE TABLE Drug
 
 CREATE TABLE Drug_Prescription
 (
-	ID_drug int NOT NULL UNIQUE,
-	ID_prescription int NOT NULL UNIQUE
+	ID_drug int NOT NULL,
+	ID_prescription int NOT NULL
 ) WITHOUT OIDS;
 
 
@@ -143,7 +143,6 @@ CREATE TABLE Prescription
 	Date_prescription date NOT NULL,
 	-- Сколько месяцев действует рецепт
 	Period int NOT NULL,
-	Name_drug varchar(50) NOT NULL,
 	ID_record int NOT NULL UNIQUE,
 	PRIMARY KEY (ID_prescription)
 ) WITHOUT OIDS;
@@ -158,8 +157,8 @@ CREATE TABLE Record
 	Date_record date NOT NULL,
 	-- Жалобы пациента
 	Complaints text,
-	ID_medcard int NOT NULL UNIQUE,
-	ID_doctor  int NOT NULL UNIQUE,
+	ID_medcard int NOT NULL,
+	ID_doctor  int NOT NULL,
 	PRIMARY KEY (ID_record)
 ) WITHOUT OIDS;
 
