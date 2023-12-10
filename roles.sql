@@ -21,15 +21,12 @@ GRANT pg_read_all_data TO administrator;
 GRANT pg_write_all_data TO administrator;
 
 CREATE ROLE doctor;
-GRANT SELECT ON ALL TABLES IN SCHEMA public TO doctor;
-REVOKE SELECT ON public.oms FROM doctor;
 
-
-GRANT UPDATE ON TABLE public.record TO doctor;
-GRANT UPDATE ON TABLE public.diagnosis TO doctor;
-GRANT UPDATE ON TABLE public.prescription TO doctor;
-GRANT UPDATE ON TABLE public.drug_prescription TO doctor;
-
+GRANT SELECT, UPDATE ON TABLE public.record TO doctor;
+GRANT SELECT, UPDATE ON TABLE public.diagnosis TO doctor;
+GRANT SELECT, UPDATE ON TABLE public.prescription TO doctor;
+GRANT SELECT, UPDATE ON TABLE public.drug_prescription TO doctor;
+GRANT SELECT(first_name, middle_name, last_name, date_birth, SNILS, gender), UPDATE ON TABLE public.patient TO doctor;
 
 CREATE USER irina_nicolaeva WITH PASSWORD 'J9#pA5cDeZ';
 CREATE USER pavel_lebedev WITH PASSWORD 'Gh7&kL3pQw';
