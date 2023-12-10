@@ -1,12 +1,24 @@
-DROP ROLE administrator;
-DROP ROLE doctor;
 
-DROP USER irina_nicolaeva;
-DROP USER pavel_lebedev;
-DROP USER tatyana_kuznecova;
+DO
+$$BEGIN
+IF EXISTS (SELECT FROM pg_roles WHERE rolname = 'doctor') THEN
+    EXECUTE 'REVOKE ALL PRIVILEGES ON ALL TABLES IN SCHEMA public FROM doctor';
+END IF;
+END$$;
+
+
+DROP ROLE IF EXISTS administrator;
+DROP ROLE IF EXISTS doctor;
+
+DROP USER IF EXISTS irina_nicolaeva;
+DROP USER IF EXISTS pavel_lebedev;
+DROP USER IF EXISTS tatyana_kuznecova;
+
+DROP USER IF EXISTS administrator_user;
 
 CREATE ROLE administrator;
-GRANT ALL ON SCHEMA public TO administrator;
+GRANT pg_read_all_data TO administrator;
+GRANT pg_write_all_data TO administrator;
 
 CREATE ROLE doctor;
 GRANT SELECT ON ALL TABLES IN SCHEMA public TO doctor;
@@ -16,7 +28,7 @@ REVOKE SELECT ON public.oms FROM doctor;
 GRANT UPDATE ON TABLE public.record TO doctor;
 GRANT UPDATE ON TABLE public.diagnosis TO doctor;
 GRANT UPDATE ON TABLE public.prescription TO doctor;
-GRANT UPDATE ON TABLE public.medcard TO doctor;
+GRANT UPDATE ON TABLE public.drug_prescription TO doctor;
 
 
 CREATE USER irina_nicolaeva WITH PASSWORD 'J9#pA5cDeZ';
@@ -30,3 +42,4 @@ GRANT doctor TO tatyana_kuznecova;
 CREATE USER administrator_user WITH PASSWORD '6423#$j987^&';
 
 GRANT administrator TO administrator_user;
+
