@@ -303,3 +303,5 @@ COMMENT ON COLUMN Speciality_doctor.Name_speciality IS 'Наименование
 
 
 
+
+
