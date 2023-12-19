@@ -13,9 +13,7 @@ SELECT *
 FROM count_doctors;
 
 --представление
-DROP VIEW IF EXISTS myview;
-
-CREATE VIEW myview AS
+CREATE OR REPLACE VIEW myview AS
 	SELECT i.id_doctor, j.date_record, COUNT(*) as count_patient
 	FROM doctor as i
 	LEFT JOIN record as j ON i.id_doctor=j.id_doctor
