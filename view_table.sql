@@ -1,6 +1,6 @@
 --временная таблица
 DROP TABLE IF EXISTS drug_patient;
-CREATE TABLE drug_patient(id_medcard integer, name_drug character varying (50), date_prescription date);
+CREATE TEMP TABLE drug_patient(id_medcard integer, name_drug character varying (50), date_prescription date);
 INSERT INTO drug_patient (id_medcard, name_drug, date_prescription)
 SELECT id_medcard, a.name_drug, a.date_prescription
 FROM (SELECT *
@@ -10,7 +10,7 @@ FROM (SELECT *
 JOIN record as b ON a.id_record = b.id_record;
 
 SELECT * 
-FROM count_doctors;
+FROM drug_patient;
 
 --представление
 CREATE OR REPLACE VIEW myview AS
