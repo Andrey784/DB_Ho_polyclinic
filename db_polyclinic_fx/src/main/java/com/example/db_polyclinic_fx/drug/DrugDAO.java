@@ -4,6 +4,8 @@ import com.example.db_polyclinic_fx.DatabaseConnection;
 import com.example.db_polyclinic_fx.drug.Drug;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DrugDAO {
 
@@ -29,6 +31,24 @@ public class DrugDAO {
         }
         return drug;
     }
+    //Получение всех имен сущностей
+    public List<String> getAllNames() {
+        List<String> drugList = new ArrayList<>();
+
+        try (Connection conn = connection.connect();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery("SELECT * FROM public.drug")) {
+
+            while (rs.next()) {
+                String name_drug = rs.getString("name_drug");
+                drugList.add(name_drug);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return drugList;
+    }
+
 
     // вывод всех сущностей
     public void getAllDrugs() {

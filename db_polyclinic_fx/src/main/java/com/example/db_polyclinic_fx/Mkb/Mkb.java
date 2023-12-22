@@ -8,6 +8,9 @@ public class Mkb {
         this.code_diagnosis = code_diagnosis;
         this.name_diagnosis = name_diagnosis;
     }
+    public Mkb(String name_diagnosis) {
+        this.name_diagnosis = name_diagnosis;
+    }
 
     public String getCode_diagnosis() {
         return code_diagnosis;

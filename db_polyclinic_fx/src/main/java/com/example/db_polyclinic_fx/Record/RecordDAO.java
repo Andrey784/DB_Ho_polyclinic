@@ -5,6 +5,8 @@ import com.example.db_polyclinic_fx.Record.Record_db;
 
 import java.sql.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 public class RecordDAO {
     private final DatabaseConnection connection;
@@ -29,6 +31,35 @@ public class RecordDAO {
             e.printStackTrace();
         }
         return record;
+    }
+
+
+    // Получение записей одной медкарты
+    public List<Record_db> getAllRecordsByMedCardId(int id_medcard) {
+        List<Record_db> recordDbList = new ArrayList<>();
+
+        String sql = "SELECT * FROM public.record WHERE id_medcard = ?";
+
+        try (Connection conn = connection.connect();
+             Statement stmt = conn.createStatement();
+             PreparedStatement preparedStatement = conn.prepareStatement(sql)) {
+            preparedStatement.setInt(1, id_medcard);
+            ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next()) {
+                int id_record = rs.getInt("id_record");
+                LocalDate date_record = rs.getObject("date_record", LocalDate.class);
+                String complaints = rs.getString("complaints");
+                int id_doctor = rs.getInt("id_doctor");
+
+
+                Record_db recordDb = new Record_db(date_record, complaints, id_medcard, id_doctor, id_record);
+                recordDbList.add(recordDb);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return recordDbList;
     }
     // вывод всех сущностей
     public void getAllRecords() {

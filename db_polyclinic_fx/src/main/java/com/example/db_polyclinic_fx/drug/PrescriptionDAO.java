@@ -30,6 +30,7 @@ public class PrescriptionDAO {
         return prescription;
     }
 
+
     // вывод всех сущностей
     public void getAllPrescriptions() {
         try (Connection conn = connection.connect();

@@ -24,7 +24,7 @@ public class Patient {
         this.gender = gender;
         this.id_oms = id_oms;
     }
-    public Patient(String first_name, String middle_name, String last_name, LocalDate date_birth, String snils, String phone_number, String gender, int id_oms,String passport_data, int id_patient) {
+    public Patient(String first_name, String middle_name, String last_name, LocalDate date_birth, String snils, String phone_number, String gender, int id_oms, int id_patient) {
         this.first_name = first_name;
         this.middle_name = middle_name;
         this.last_name = last_name;
@@ -33,8 +33,21 @@ public class Patient {
         this.phone_number = phone_number;
         this.gender = gender;
         this.id_oms = id_oms;
-        this.passport_data = passport_data;
         this.id_patient = id_patient;
+
+    }
+    public Patient(String first_name, String middle_name, String last_name, LocalDate date_birth, String snils, String phone_number, String gender, int id_oms, int id_patient, String passport_data) {
+        this.first_name = first_name;
+        this.middle_name = middle_name;
+        this.last_name = last_name;
+        this.date_birth = date_birth;
+        this.snils = snils;
+        this.phone_number = phone_number;
+        this.gender = gender;
+        this.id_oms = id_oms;
+        this.id_patient = id_patient;
+        this.passport_data = passport_data;
+
     }
 
     public String getFirst_name() {

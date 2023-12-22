@@ -22,7 +22,35 @@ public class DoctorDAO {
             preparedStatement.setString(1, login);
             ResultSet rs = preparedStatement.executeQuery();
             if(rs.next()){
-                doctor = new Doctor(rs.getString("first_name"), rs.getString("middle_name"), rs.getString("last_name"), rs.getString("login"), rs.getString("password_doctor"), rs.getInt("id_speciality"));
+                int id = rs.getInt("id_doctor");
+                String first_name = rs.getString("first_name");
+                String middle_name = rs.getString("middle_name");
+                String last_name = rs.getString("last_name");
+                String password_doctor = rs.getString("password_doctor");
+                int id_speciality = rs.getInt("id_speciality");
+                doctor = new Doctor(first_name, middle_name, last_name, login, password_doctor, id_speciality, id);            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return doctor;
+    }
+    // Получение сущности по login
+    public Doctor getDoctorById(int id_doctor){
+        String sql = "SELECT * FROM public.doctor WHERE id_doctor = ?";
+        Doctor doctor = null;
+        try  (Connection conn = connection.connect();
+              PreparedStatement preparedStatement = conn.prepareStatement(sql)) {
+            preparedStatement.setInt(1, id_doctor);
+            ResultSet rs = preparedStatement.executeQuery();
+            if(rs.next()){
+                int id = rs.getInt("id_doctor");
+                String first_name = rs.getString("first_name");
+                String middle_name = rs.getString("middle_name");
+                String last_name = rs.getString("last_name");
+                String login = rs.getString("login");
+                String password_doctor = rs.getString("password_doctor");
+                int id_speciality = rs.getInt("id_speciality");
+                doctor = new Doctor(first_name, middle_name, last_name, login, password_doctor, id_speciality, id_doctor);
             }
         } catch (SQLException e) {
             e.printStackTrace();

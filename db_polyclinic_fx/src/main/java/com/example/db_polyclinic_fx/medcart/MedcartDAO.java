@@ -30,6 +30,23 @@ public class MedcartDAO {
         }
         return medcart;
     }
+    // Получение сущности по ID_patient
+    public Medcart getmedcartByPatientId(int id_patient){
+        String sql = "SELECT * FROM public.medcard WHERE id_patient = ?";
+        Medcart medcart = null;
+        try  (Connection conn = connection.connect();
+              PreparedStatement preparedStatement = conn.prepareStatement(sql)) {
+            preparedStatement.setInt(1, id_patient);
+            ResultSet rs = preparedStatement.executeQuery();
+
+            if(rs.next()){
+                medcart = new Medcart(rs.getObject("date_create", LocalDate.class), rs.getInt("id_patient"), rs.getInt("id_medcard"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return medcart;
+    }
 
     // вывод всех сущностей
     public void getAllMedcarts() {
