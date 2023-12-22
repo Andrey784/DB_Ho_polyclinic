@@ -1,3 +1,25 @@
+-- Триггер для добавление кода мкб-10 в таблицу mkb_10, если он появился в таблице diagnosis
+CREATE OR REPLACE FUNCTION add_mkb10() RETURNS trigger AS $$
+DECLARE 
+	code_exist integer := 0;
+BEGIN
+	SELECT COUNT(*) INTO code_exist 
+	FROM mkb_10 
+	WHERE code_diagnosis = NEW.code_diagnosis;
+	
+	 IF code_exist = 0 THEN
+        INSERT INTO mkb_10 (code_diagnosis) VALUES (NEW.code_diagnosis);
+    END IF;
+RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE TRIGGER add_mkb10_trig BEFORE INSERT ON public."diagnosis" 
+FOR EACH ROW EXECUTE
+FUNCTION add_mkb10()
+    
+
+
 -- Процедура для создания "нвоого доктора" 
 CREATE OR REPLACE PROCEDURE create_doctor(
     first_name character varying(20), 
