@@ -30,6 +30,8 @@ GRANT SELECT ON TABLE public.doctor TO doctor;
 GRANT SELECT ON TABLE public.speciality_doctor TO doctor;
 GRANT SELECT ON TABLE public.oms TO doctor;
 GRANT SELECT ON TABLE public.medcard TO doctor;
+GRANT SELECT ON TABLE public.mkb_10 TO doctor;
+GRANT SELECT ON TABLE public.drug TO doctor;
 GRANT SELECT(first_name, middle_name, last_name, date_birth, SNILS, gender) ON TABLE public.patient TO doctor;
 
 CREATE USER irina_nicolaeva WITH PASSWORD 'J9#pA5cDeZ';
