@@ -1,6 +1,13 @@
 
 DO
 $$BEGIN
+IF EXISTS (SELECT FROM pg_roles WHERE rolname = 'administrator') THEN
+    EXECUTE 'REVOKE ALL PRIVILEGES ON ALL TABLES IN SCHEMA public FROM administrator';
+END IF;
+END$$;
+
+DO
+$$BEGIN
 IF EXISTS (SELECT FROM pg_roles WHERE rolname = 'doctor') THEN
     EXECUTE 'REVOKE ALL PRIVILEGES ON ALL TABLES IN SCHEMA public FROM doctor';
 END IF;
